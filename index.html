@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checklist final REA (Región de Murcia) — Plantilla rellenable</title>
+  <style>
+    :root{
+      --line:#e5e7eb;
+      --soft:#f6f7fb;
+      --accent:#1d4ed8;
+      --ok:#16a34a;
+      --pend:#f59e0b;
+      --block:#dc2626;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:#111827;
+      background:#f3f4f6;
+    }
+    header{
+      background:linear-gradient(180deg, #0b1220, #0f1b33);
+      color:white;
+      padding:22px 18px;
+    }
+    header .wrap{max-width:1100px;margin:0 auto;display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    header h1{margin:0;font-size:18px;letter-spacing:.2px}
+    header p{margin:6px 0 0;color:#cbd5e1;font-size:13px;max-width:70ch}
+    .toolbar{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08);
+      color:white;
+      padding:10px 12px;
+      border-radius:10px;
+      font-weight:600;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:.15s ease;
+    }
+    .btn:hover{background:rgba(255,255,255,.14)}
+    .btn.secondary{background:rgba(255,255,255,.02)}
+    .btn.danger{border-color:rgba(239,68,68,.45); background:rgba(239,68,68,.10)}
+    .btn:active{transform:translateY(1px)}
+    main{max-width:1100px;margin:18px auto;padding:0 18px 50px}
+    .card{
+      background:white;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      box-shadow:0 1px 2px rgba(16,24,40,.04);
+      margin-bottom:14px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .field{
+      grid-column: span 6;
+      display:flex;flex-direction:column;gap:6px;
+    }
+    .field.small{grid-column: span 3}
+    .field.full{grid-column: span 12}
+    label{
+      font-size:12px;
+      color:#374151;
+      font-weight:700;
+    }
+    input[type="text"], input[type="date"], select, textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:10px 10px;
+      font-size:13px;
+      outline:none;
+      background:white;
+    }
+    textarea{min-height:70px;resize:vertical}
+    input:focus, select:focus, textarea:focus{border-color:rgba(29,78,216,.5); box-shadow:0 0 0 4px rgba(29,78,216,.12)}
+    .inline-note{
+      margin-top:10px;
+      padding:10px 12px;
+      border-left:4px solid rgba(29,78,216,.7);
+      background:rgba(29,78,216,.06);
+      border-radius:10px;
+      font-size:13px;
+      color:#1f2937;
+    }
+    .legend{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      font-size:12px;color:#374151;margin-top:10px
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff
+    }
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .dot.ok{background:var(--ok)}
+    .dot.p{background:var(--pend)}
+    .dot.b{background:var(--block)}
+    .section-title{
+      margin:0 0 10px;
+      font-size:15px;
+      color:#111827;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .section-title small{color:#6b7280;font-weight:600}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      min-width:980px;
+      background:white;
+    }
+    th, td{
+      border-bottom:1px solid var(--line);
+      padding:10px 10px;
+      vertical-align:top;
+      font-size:12.5px;
+    }
+    th{
+      position:sticky; top:0;
+      background:var(--soft);
+      z-index:1;
+      text-align:left;
+      color:#111827;
+      font-size:12px;
+    }
+    tr:last-child td{border-bottom:none}
+    td.code{white-space:nowrap;font-weight:800;color:#111827}
+    .evidence{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:8px 9px;
+      font-size:12.5px;
+    }
+    .obs{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:8px 9px;
+      font-size:12.5px;
+      min-height:54px;
+      resize:vertical;
+    }
+    .seg{
+      display:inline-flex;
+      border:1px solid var(--line);
+      border-radius:999px;
+      overflow:hidden;
+      background:white;
+    }
+    .seg label{
+      margin:0;
+      cursor:pointer;
+      user-select:none;
+      border-right:1px solid var(--line);
+    }
+    .seg label:last-child{border-right:none}
+    .seg input{display:none}
+    .seg .tag{
+      width:8px;height:8px;border-radius:999px;display:inline-block
+    }
+    .seg .tag.ok{background:var(--ok)}
+    .seg .tag.p{background:var(--pend)}
+    .seg .tag.b{background:var(--block)}
+    .seg input:checked + span{
+      background:rgba(29,78,216,.08);
+      box-shadow: inset 0 0 0 1px rgba(29,78,216,.25);
+    }
+    .seg span{
+      border-radius:999px;
+      padding:7px 10px;
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      font-weight:800;
+      font-size:11px;
+      color:#111827;
+    }
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .kpi{
+      grid-column: span 4;
+      background:white;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .kpi strong{font-size:22px}
+    .kpi .label{font-size:12px;color:#6b7280;font-weight:700}
+    .kpi.ok strong{color:var(--ok)}
+    .kpi.p strong{color:var(--pend)}
+    .kpi.b strong{color:var(--block)}
+    .two-col{display:grid;grid-template-columns: 1.2fr .8fr;gap:12px}
+    .list{
+      margin:0;
+      padding-left:18px;
+      color:#111827;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .muted{color:#6b7280}
+    .plan table{min-width:0}
+    .plan td, .plan th{font-size:12px}
+    .gate{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:6px
+    }
+    .gate label{font-weight:700;color:#111827;font-size:12px;display:flex;gap:8px;align-items:center}
+    .gate input{transform:translateY(1px)}
+    .footer-note{
+      font-size:12px;color:#6b7280;margin-top:8px
+    }
+    @media print{
+      header{background:white !important; color:#111827 !important; padding:0; margin-bottom:10px}
+      header .toolbar{display:none !important}
+      header p{color:#374151 !important}
+      body{background:white}
+      main{max-width:none; margin:0; padding:0 10mm 10mm}
+      .card{box-shadow:none}
+      .table-wrap{overflow:visible}
+      th{position:static}
+      .no-print{display:none !important}
+      .page-break{break-before:page}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <div>
+      <h1>Checklist final REA — Plantilla rellenable (HTML)</h1>
+      <p>Basada en tu checklist. Incluye recuento automático, listado de bloqueantes y “Descargar PDF” (imprimir/guardar como PDF).</p>
+    </div>
+    <div class="toolbar no-print">
+      <button class="btn" id="btnPdf" title="Abre el diálogo de impresión para guardar como PDF">🖨️ Descargar PDF</button>
+      <button class="btn secondary" id="btnJsonSave" title="Guarda una copia en .json (útil para compartir)">💾 Guardar .json</button>
+      <label class="btn secondary" style="cursor:pointer" title="Cargar un .json guardado">
+        📂 Cargar .json <input id="fileJson" type="file" accept="application/json" style="display:none">
+      </label>
+      <button class="btn danger" id="btnReset" title="Borra el formulario (no afecta al archivo original)">🧹 Reiniciar</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="card" aria-label="Datos de identificación">
+    <h2 class="section-title">Identificación <small>Rellena antes de revisar</small></h2>
+
+    <div class="grid">
+      <div class="field full">
+        <label for="reaTitulo">REA</label>
+        <input id="reaTitulo" type="text" placeholder="Título del REA" />
+      </div>
+
+      <div class="field">
+        <label for="autor">Autor/a</label>
+        <input id="autor" type="text" placeholder="Nombre y apellidos" />
+      </div>
+
+      <div class="field">
+        <label for="centro">Centro</label>
+        <input id="centro" type="text" placeholder="Nombre del centro" />
+      </div>
+
+      <div class="field small">
+        <label for="etapa">Etapa/Curso</label>
+        <input id="etapa" type="text" placeholder="ESO/Bach – Curso" />
+      </div>
+
+      <div class="field small">
+        <label for="materia">Materia</label>
+        <input id="materia" type="text" placeholder="Materia" />
+      </div>
+
+      <div class="field small">
+        <label for="version">Versión</label>
+        <input id="version" type="text" placeholder="v1.0" value="v1.0" />
+      </div>
+
+      <div class="field small">
+        <label for="fecha">Fecha revisión</label>
+        <input id="fecha" type="date" />
+      </div>
+
+      <div class="field">
+        <label for="revisor">Revisor/a</label>
+        <input id="revisor" type="text" placeholder="Mentor / Docente (revisión cruzada)" />
+      </div>
+
+      <div class="field full">
+        <label>Decisión de gate</label>
+        <div class="gate" role="group" aria-label="Decisión de gate">
+          <label><input type="radio" name="gate" value="Publicable"> Publicable</label>
+          <label><input type="radio" name="gate" value="Publicable con condiciones"> Publicable con condiciones</label>
+          <label><input type="radio" name="gate" value="No publicable"> No publicable</label>
+        </div>
+        <div class="inline-note">
+          <strong>Regla de validación (recomendada):</strong> si hay <strong>≥ 1 Bloqueante</strong>, el REA <strong>no</strong> se valida para publicación (se abre plan de corrección y nueva revisión).
+          <div class="legend">
+            <span class="pill"><span class="dot ok"></span> <strong>OK</strong>: cumple</span>
+            <span class="pill"><span class="dot p"></span> <strong>Pendiente</strong>: falta ajuste no crítico</span>
+            <span class="pill"><span class="dot b"></span> <strong>Bloqueante</strong>: impide publicación</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Resumen automático">
+    <h2 class="section-title">Resumen automático <small>Se actualiza al marcar OK / P / B</small></h2>
+
+    <div class="kpis">
+      <div class="kpi ok">
+        <div>
+          <div class="label">Total OK</div>
+          <strong id="kpiOk">0</strong>
+        </div>
+        <span class="dot ok" aria-hidden="true"></span>
+      </div>
+      <div class="kpi p">
+        <div>
+          <div class="label">Total Pendiente</div>
+          <strong id="kpiP">0</strong>
+        </div>
+        <span class="dot p" aria-hidden="true"></span>
+      </div>
+      <div class="kpi b">
+        <div>
+          <div class="label">Total Bloqueante</div>
+          <strong id="kpiB">0</strong>
+        </div>
+        <span class="dot b" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:12px">
+      <div class="card" style="margin:0">
+        <h3 class="section-title" style="margin-bottom:8px">Bloqueantes detectados <small>se generan automáticamente</small></h3>
+        <ol class="list" id="bloqueantesList">
+          <li class="muted">Sin bloqueantes (de momento).</li>
+        </ol>
+      </div>
+      <div class="card plan" style="margin:0">
+        <h3 class="section-title" style="margin-bottom:8px">Plan de cierre <small>solo bloqueantes y pendientes críticos</small></h3>
+        <div class="table-wrap" style="min-width:0">
+          <table aria-label="Plan de cierre">
+            <thead>
+              <tr>
+                <th style="width:44%">Acción</th>
+                <th style="width:26%">Responsable</th>
+                <th style="width:16%">Fecha</th>
+                <th style="width:14%">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input class="evidence" data-plan="accion1" type="text" placeholder="Acción 1"></td>
+                <td><input class="evidence" data-plan="resp1" type="text" placeholder="Responsable"></td>
+                <td><input class="evidence" data-plan="fecha1" type="text" placeholder="dd/mm"></td>
+                <td>
+                  <select class="evidence" data-plan="estado1">
+                    <option value="">—</option>
+                    <option>En curso</option>
+                    <option>Hecho</option>
+                    <option>Bloqueado</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><input class="evidence" data-plan="accion2" type="text" placeholder="Acción 2"></td>
+                <td><input class="evidence" data-plan="resp2" type="text" placeholder="Responsable"></td>
+                <td><input class="evidence" data-plan="fecha2" type="text" placeholder="dd/mm"></td>
+                <td>
+                  <select class="evidence" data-plan="estado2">
+                    <option value="">—</option>
+                    <option>En curso</option>
+                    <option>Hecho</option>
+                    <option>Bloqueado</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><input class="evidence" data-plan="accion3" type="text" placeholder="Acción 3"></td>
+                <td><input class="evidence" data-plan="resp3" type="text" placeholder="Responsable"></td>
+                <td><input class="evidence" data-plan="fecha3" type="text" placeholder="dd/mm"></td>
+                <td>
+                  <select class="evidence" data-plan="estado3">
+                    <option value="">—</option>
+                    <option>En curso</option>
+                    <option>Hecho</option>
+                    <option>Bloqueado</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footer-note">Sugerencia: si hay bloqueantes, fija fechas cortas (48–72h) para no arrastrarlos a publicación.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Checklist completo">
+    <h2 class="section-title">Checklist completo <small>Marca OK / P / B y añade observaciones</small></h2>
+    <div id="tables"></div>
+    <div class="footer-note">La plantilla se guarda automáticamente en tu navegador. Puedes exportar/importar en .json.</div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Firmas <small>(opcional)</small></h2>
+    <div class="grid">
+      <div class="field">
+        <label for="firmaDoc">Firma docente</label>
+        <input id="firmaDoc" type="text" placeholder="Nombre / firma" />
+      </div>
+      <div class="field">
+        <label for="firmaMentor">Firma mentor</label>
+        <input id="firmaMentor" type="text" placeholder="Nombre / firma" />
+      </div>
+      <div class="field small">
+        <label for="fechaFirma">Fecha</label>
+        <input id="fechaFirma" type="date" />
+      </div>
+      <div class="field full">
+        <label for="comentariosFinales">Comentarios finales</label>
+        <textarea id="comentariosFinales" placeholder="Conclusión breve, condiciones de publicación, observaciones relevantes…"></textarea>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const CHECKLIST = [
+  {
+    title: "CATEGORÍA 1 — ASPECTOS PEDAGÓGICOS",
+    criteria: [
+      {
+        code: "1.1",
+        title: "Metodología didáctica",
+        items: [
+          {code:"1.1.1", ver:"Aprendizaje competencial", ev:"Guía didáctica + tareas"},
+          {code:"1.1.2", ver:"Aprendizaje significativo", ev:"Comenzamos + contexto"},
+          {code:"1.1.3", ver:"Conexión con la realidad del alumnado", ev:"Comenzamos + reto"},
+          {code:"1.1.4", ver:"Participación activa del alumnado", ev:"Desarrollo + tareas"},
+          {code:"1.1.5", ver:"Trabajo colaborativo (cuando proceda)", ev:"Tareas + agrupamientos"},
+          {code:"1.1.6", ver:"Evaluación formativa / feedback durante el proceso", ev:"Evaluación + tareas"},
+          {code:"1.1.7", ver:"Reflexión/metacognición sobre el aprendizaje", ev:"Actividades de cierre"},
+          {code:"1.1.8", ver:"Incluye herramientas digitales como apoyo a tareas (si aplica)", ev:"Recursos/tareas"},
+          {code:"1.1.9", ver:"Enfoque DUA / atención a la diversidad (si aplica)", ev:"Diseño de tareas"},
+        ]
+      },
+      {
+        code: "1.2",
+        title: "Contenidos",
+        items: [
+          {code:"1.2.1", ver:"Contenidos bien secuenciados", ev:"Desarrollo"},
+          {code:"1.2.2", ver:"Contenidos rigurosos y veraces", ev:"Fuentes + materiales"},
+          {code:"1.2.3", ver:"Materiales completos (instrucciones, plantillas, instrumentos…)", ev:"Recursos integrados"},
+        ]
+      },
+      {
+        code: "1.3",
+        title: "Tareas",
+        items: [
+          {code:"1.3.1", ver:"Diversidad de actividades/formatos", ev:"Desarrollo"},
+          {code:"1.3.2", ver:"Fomenta participación activa", ev:"Tareas"},
+          {code:"1.3.3", ver:"Promueve pensamiento crítico", ev:"Tareas / debates / análisis"},
+          {code:"1.3.4", ver:"Incluye evaluación de la tarea (cómo/quién/cuándo)", ev:"En cada tarea evaluable"},
+          {code:"1.3.5", ver:"Incluye actividad inicial motivadora", ev:"Comenzamos"},
+          {code:"1.3.6", ver:"Propósito claro y diseño progresivo hacia producto final", ev:"Secuencia completa"},
+        ]
+      },
+    ]
+  },
+  {
+    title: "CATEGORÍA 2 — ASPECTOS DE DISEÑO",
+    criteria: [
+      {
+        code:"2.1",
+        title:"Presentación inicial",
+        items: [
+          {code:"2.1.1", ver:"Título motivador (nombre completo, representativo)", ev:"Portada"},
+          {code:"2.1.2", ver:"Elementos visuales coherentes y motivadores", ev:"Portada"},
+          {code:"2.1.3", ver:"Descripción y objetivos claros (curso/materia + producto final)", ev:"Portada/Comenzamos"},
+        ]
+      },
+      {
+        code:"2.2",
+        title:"Formato y estilo",
+        items: [
+          {code:"2.2.1", ver:"Diseño unificado y coherente", ev:"Todo el REA"},
+          {code:"2.2.2", ver:"Diseño limpio y atractivo", ev:"Todo el REA"},
+          {code:"2.2.3", ver:"Redacción clara y correcta", ev:"Todo el REA"},
+          {code:"2.2.4", ver:"Lenguaje adaptado al público objetivo", ev:"Todo el REA"},
+        ]
+      },
+      {
+        code:"2.3",
+        title:"Guía didáctica",
+        items: [
+          {code:"2.3.1", ver:"Información básica (título, curso, materia, tareas, sesiones, agrupamientos…)", ev:"Guía didáctica"},
+          {code:"2.3.2", ver:"Metodología especificada", ev:"Guía didáctica"},
+          {code:"2.3.3", ver:"Referencias curriculares (competencias/saberes/criterios)", ev:"Guía didáctica"},
+          {code:"2.3.4", ver:"Propuesta de evaluación y seguimiento (incluye actores)", ev:"Guía didáctica + Evaluación"},
+        ]
+      },
+      {
+        code:"2.4",
+        title:"Accesibilidad en los REA",
+        items: [
+          {code:"2.4.1", ver:"Encabezados reales (H1/H2/H3)", ev:"Export HTML"},
+          {code:"2.4.2", ver:"Hiperenlaces accesibles (texto claro; mejor en ventana nueva)", ev:"Muestreo enlaces"},
+          {code:"2.4.3", ver:"Imágenes con texto alternativo", ev:"Muestreo imágenes"},
+          {code:"2.4.4", ver:"Vídeos con subtítulos (si aplica)", ev:"Muestreo vídeos"},
+          {code:"2.4.5", ver:"Contraste adecuado", ev:"Revisión visual"},
+          {code:"2.4.6", ver:"Tipografía accesible", ev:"Estilos"},
+          {code:"2.4.7", ver:"Navegación accesible", ev:"Prueba navegación"},
+        ]
+      },
+    ]
+  },
+  {
+    title: "CATEGORÍA 3 — ASPECTOS TÉCNICOS Y LEGALES",
+    criteria: [
+      {
+        code:"3.1",
+        title:"Interactividad",
+        items: [
+          {code:"3.1.1", ver:"Actividades promueven interacción", ev:"Tareas/H5P/etc."},
+          {code:"3.1.2", ver:"Promueve interacción con contenidos (no solo lectura)", ev:"Tareas"},
+          {code:"3.1.3", ver:"Promueve interacción entre usuarios (si procede)", ev:"Dinámicas"},
+          {code:"3.1.4", ver:"Incluye multimedia dinámica cuando aporta valor", ev:"Recursos"},
+        ]
+      },
+      {
+        code:"3.2",
+        title:"Requisitos técnicos",
+        items: [
+          {code:"3.2.1", ver:"Robustez técnica", ev:"Export HTML sin errores"},
+          {code:"3.2.2", ver:"Enlaces funcionales", ev:"Test enlaces"},
+          {code:"3.2.3", ver:"Archivo fuente disponible (editable)", ev:".elp en descarga"},
+          {code:"3.2.4", ver:"Exportación a formatos estándar (si aplica)", ev:"HTML/SCORM/IMS"},
+          {code:"3.2.5", ver:"Acceso multiplataforma", ev:"Pruebas móvil/PC"},
+          {code:"3.2.6", ver:"Catalogación/metadatos", ev:"Propiedades/ficha"},
+        ]
+      },
+      {
+        code:"3.3",
+        title:"Licencias y derechos de autor",
+        items: [
+          {code:"3.3.1", ver:"Licencia abierta (preferible CC BY / CC BY-SA)", ev:"Portada + Créditos"},
+          {code:"3.3.2", ver:"Compatibilidad licencias (REA vs. recursos incluidos)", ev:"Muestreo recursos"},
+          {code:"3.3.3", ver:"Citas y créditos completos + transparencia IA si procede", ev:"Créditos + metadatos"},
+        ]
+      },
+    ]
+  }
+];
+
+const STORAGE_KEY = "checklist_final_rea_rm_v1";
+
+function el(tag, attrs={}, children=[]){
+  const node = document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs)){
+    if(k === "class") node.className = v;
+    else if(k === "html") node.innerHTML = v;
+    else node.setAttribute(k, v);
+  }
+  for(const ch of children){
+    if(typeof ch === "string") node.appendChild(document.createTextNode(ch));
+    else node.appendChild(ch);
+  }
+  return node;
+}
+
+function buildTables(){
+  const host = document.getElementById("tables");
+  host.innerHTML = "";
+
+  CHECKLIST.forEach(cat => {
+    const catCard = el("div", {class:"card page-break", style:"margin:0 0 14px"});
+    catCard.appendChild(el("h3", {class:"section-title", html:`${cat.title} <small>${cat.criteria.length} criterios</small>`}));
+
+    cat.criteria.forEach(crit => {
+      catCard.appendChild(el("h4", {class:"section-title", style:"margin:14px 0 8px", html:`${crit.code} — ${crit.title} <small>${crit.items.length} ítems</small>`}));
+
+      const wrap = el("div", {class:"table-wrap"});
+      const table = el("table", {"aria-label": `${crit.code} ${crit.title}`});
+
+      const thead = el("thead");
+      thead.appendChild(el("tr", {}, [
+        el("th", {style:"width:9%"}, ["Ítem"]),
+        el("th", {style:"width:26%"}, ["Verificación"]),
+        el("th", {style:"width:18%"}, ["Evidencia (editable)"]),
+        el("th", {style:"width:17%"}, ["Estado (OK / P / B)"]),
+        el("th", {style:"width:30%"}, ["Observaciones / Acción correctora"]),
+      ]));
+      table.appendChild(thead);
+
+      const tbody = el("tbody");
+      crit.items.forEach(item => {
+        const name = `status_${item.code.replaceAll(".","_")}`;
+        const row = el("tr");
+
+        row.appendChild(el("td", {class:"code"}, [item.code]));
+        row.appendChild(el("td", {}, [item.ver]));
+
+        const evInput = el("input", {type:"text", class:"evidence", value:item.ev, "data-item": item.code, "data-field":"ev"});
+        row.appendChild(el("td", {}, [evInput]));
+
+        const seg = el("div", {class:"seg", role:"group", "aria-label": `Estado ${item.code}`});
+        function opt(val, labelTxt, cls){
+          const input = el("input", {type:"radio", name, value:val, "data-item": item.code, "data-field":"st"});
+          const span = el("span", {}, [el("span", {class:`tag ${cls}`}), labelTxt]);
+          const lab = el("label", {});
+          lab.appendChild(input);
+          lab.appendChild(span);
+          return lab;
+        }
+        seg.appendChild(opt("OK","OK","ok"));
+        seg.appendChild(opt("P","P","p"));
+        seg.appendChild(opt("B","B","b"));
+        row.appendChild(el("td", {}, [seg]));
+
+        const obs = el("textarea", {class:"obs", placeholder:"Observaciones / acción correctora", "data-item": item.code, "data-field":"obs"});
+        row.appendChild(el("td", {}, [obs]));
+
+        tbody.appendChild(row);
+      });
+
+      table.appendChild(tbody);
+      wrap.appendChild(table);
+      catCard.appendChild(wrap);
+    });
+
+    host.appendChild(catCard);
+  });
+}
+
+function findVerificationText(code){
+  for(const cat of CHECKLIST){
+    for(const crit of cat.criteria){
+      for(const it of crit.items){
+        if(it.code === code) return it.ver;
+      }
+    }
+  }
+  return "";
+}
+
+function computeKpis(){
+  let ok=0, p=0, b=0;
+  const bloqueantes = [];
+
+  const codes = new Set();
+  document.querySelectorAll("input[type='radio'][data-field='st']").forEach(r => codes.add(r.getAttribute("data-item")));
+  codes.forEach(code => {
+    const checked = document.querySelector(`input[type="radio"][data-item="${CSS.escape(code)}"][data-field="st"]:checked`);
+    if(!checked) return;
+    if(checked.value === "OK") ok++;
+    else if(checked.value === "P") p++;
+    else if(checked.value === "B"){ b++; bloqueantes.push(code); }
+  });
+
+  document.getElementById("kpiOk").textContent = ok;
+  document.getElementById("kpiP").textContent = p;
+  document.getElementById("kpiB").textContent = b;
+
+  const list = document.getElementById("bloqueantesList");
+  list.innerHTML = "";
+  if(bloqueantes.length === 0){
+    list.appendChild(el("li", {class:"muted"}, ["Sin bloqueantes (de momento)."]));
+  } else {
+    bloqueantes.sort((a,b)=>a.localeCompare(b, "es"));
+    bloqueantes.forEach(code => list.appendChild(el("li", {}, [`${code} — ${findVerificationText(code)}`])));
+  }
+}
+
+function collectState(){
+  const data = {
+    meta: {
+      reaTitulo: document.getElementById("reaTitulo").value || "",
+      autor: document.getElementById("autor").value || "",
+      centro: document.getElementById("centro").value || "",
+      etapa: document.getElementById("etapa").value || "",
+      materia: document.getElementById("materia").value || "",
+      version: document.getElementById("version").value || "",
+      fecha: document.getElementById("fecha").value || "",
+      revisor: document.getElementById("revisor").value || "",
+      gate: (document.querySelector("input[name='gate']:checked")||{}).value || "",
+      firmaDoc: document.getElementById("firmaDoc").value || "",
+      firmaMentor: document.getElementById("firmaMentor").value || "",
+      fechaFirma: document.getElementById("fechaFirma").value || "",
+      comentariosFinales: document.getElementById("comentariosFinales").value || "",
+    },
+    items: {},
+    plan: {}
+  };
+
+  document.querySelectorAll("[data-item]").forEach(node => {
+    const code = node.getAttribute("data-item");
+    const field = node.getAttribute("data-field");
+    data.items[code] = data.items[code] || { ev:"", st:"", obs:"" };
+
+    if(field === "ev") data.items[code].ev = node.value || "";
+    if(field === "obs") data.items[code].obs = node.value || "";
+    if(field === "st" && node.type === "radio" && node.checked) data.items[code].st = node.value;
+  });
+
+  document.querySelectorAll("[data-plan]").forEach(node => {
+    data.plan[node.getAttribute("data-plan")] = node.value || "";
+  });
+
+  return data;
+}
+
+function applyState(data){
+  if(!data) return;
+  const m = data.meta || {};
+  const map = {
+    reaTitulo:m.reaTitulo, autor:m.autor, centro:m.centro, etapa:m.etapa, materia:m.materia,
+    version:m.version, fecha:m.fecha, revisor:m.revisor, firmaDoc:m.firmaDoc, firmaMentor:m.firmaMentor,
+    fechaFirma:m.fechaFirma
+  };
+  Object.entries(map).forEach(([id,val]) => {
+    const node = document.getElementById(id);
+    if(node) node.value = val || "";
+  });
+  document.getElementById("comentariosFinales").value = m.comentariosFinales || "";
+
+  if(m.gate){
+    const r = document.querySelector(`input[name='gate'][value="${CSS.escape(m.gate)}"]`);
+    if(r) r.checked = true;
+  }
+
+  const plan = data.plan || {};
+  document.querySelectorAll("[data-plan]").forEach(node => {
+    node.value = plan[node.getAttribute("data-plan")] || "";
+  });
+
+  const items = data.items || {};
+  Object.entries(items).forEach(([code, obj]) => {
+    const ev = document.querySelector(`[data-item="${CSS.escape(code)}"][data-field="ev"]`);
+    const obs = document.querySelector(`[data-item="${CSS.escape(code)}"][data-field="obs"]`);
+    if(ev) ev.value = obj.ev || "";
+    if(obs) obs.value = obj.obs || "";
+    if(obj.st){
+      const r = document.querySelector(`input[type="radio"][data-item="${CSS.escape(code)}"][data-field="st"][value="${CSS.escape(obj.st)}"]`);
+      if(r) r.checked = true;
+    }
+  });
+
+  computeKpis();
+}
+
+function saveToLocal(){
+  localStorage.setItem("checklist_final_rea_rm_v1", JSON.stringify(collectState()));
+}
+function loadFromLocal(){
+  try{
+    const raw = localStorage.getItem("checklist_final_rea_rm_v1");
+    if(raw) applyState(JSON.parse(raw));
+  }catch(e){ console.warn(e); }
+}
+
+function resetAll(){
+  if(!confirm("¿Seguro que quieres reiniciar el formulario? (Se borrará lo guardado en este navegador)")) return;
+  localStorage.removeItem("checklist_final_rea_rm_v1");
+  location.reload();
+}
+
+function downloadJson(){
+  const data = collectState();
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  const safeTitle = (data.meta.reaTitulo || "Checklist_REA").replace(/[^\w\d\- ]+/g,"").trim().replace(/\s+/g,"_");
+  a.href = URL.createObjectURL(blob);
+  a.download = `${safeTitle || "Checklist_REA"}_rellenable.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+}
+
+function importJson(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      applyState(JSON.parse(reader.result));
+      saveToLocal();
+      alert("JSON cargado correctamente.");
+    }catch(e){
+      alert("No se pudo cargar el JSON. Revisa el archivo.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function wireEvents(){
+  document.addEventListener("input", (ev) => {
+    const t = ev.target;
+    if(t.matches("input, textarea, select")){
+      computeKpis();
+      saveToLocal();
+    }
+  });
+  document.addEventListener("change", (ev) => {
+    const t = ev.target;
+    if(t.matches("input, textarea, select")){
+      computeKpis();
+      saveToLocal();
+    }
+  });
+
+  document.getElementById("btnPdf").addEventListener("click", () => window.print());
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+  document.getElementById("btnJsonSave").addEventListener("click", downloadJson);
+  document.getElementById("fileJson").addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if(file) importJson(file);
+    e.target.value = "";
+  });
+}
+
+(function init(){
+  buildTables();
+  wireEvents();
+  loadFromLocal();
+  computeKpis();
+})();
+</script>
+</body>
+</html>
